@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 //데이터 베이스에 연결하고 select, insert, update,delete 작업을 실행해주는 클래스
 public class MemberDAO {
@@ -65,5 +66,98 @@ public class MemberDAO {
 					e.printStackTrace();
 				}
 	}
+	
+	
+	//모든 회원의 정보를 리턴해주는 메소드 호출
+	public Vector<MemberBean> allSelectMember(){
+		
+		//가변길이로 데이터를 저장
+		Vector<MemberBean> v = new Vector<>();
+
+		//데이터 베이스는 무조건 예외처리를 해야한다.
+		
+		try {
+			//커넥션 연결
+			getCon();
+			//쿼리준비
+			String sql ="select * from member";
+			//쿼리를 실행시켜주는 객체 선언
+			pstmt = conn.prepareStatement(sql);
+			//쿼리를 실행시킨 결과를 리턴해서 받아줌(오라클 테이블의 검색된 결과를 자바 객체에 저장)
+			rs=pstmt.executeQuery();
+			
+			//반복문을 사용해서 rs에 저장된 데이터를 추출
+			while(rs.next()) {
+				 MemberBean bean = new MemberBean(); //컬럼으로 나뉘어진 데이터를 빈 클래스에 저장 
+				 bean.setId(rs.getString(1));
+				 bean.setPass1(rs.getString(2));
+				 bean.setEmail(rs.getString(3));
+				 bean.setTel(rs.getString(4));
+				 bean.setHobby(rs.getString(5));
+				 bean.setJob(rs.getString(6));
+				 bean.setAge(rs.getString(7));
+				 bean.setInfo(rs.getString(8));	 
+				 
+				 //패키징된 memberbean클래스를 백터에 저장 
+				 v.add(bean);//0번지 부터 순서대로 데이터가 저장
+			}
+			
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		//다 저장된 vector를 리턴
+		return v;
+	}
+	
+	
+	
+	public MemberBean oneSelectMember(String id){
+		//한사람에 대한 정보만 리턴하기에 빈클래스 객체 생성
+		MemberBean bean = new MemberBean();
+		//무조건 데이터 베이스는 예외 처리를 반드시 해야 합니다.
+		 try{
+			 //커넥션 연결 
+			 getCon();
+			 
+			 //쿼리 준비 
+			 String SQL = "SELECT *FROM MEMBER WHERE id= ?";
+			 //쿼리를 실행 시켜주는 객체 선언 
+			 pstmt = conn.prepareStatement(SQL);		 
+			 //?의 값을 맵핑 
+			 pstmt.setString(1,id);
+			 //쿼리 실행 
+			 rs = pstmt.executeQuery();
+			 if(rs.next()){//레코드가 있다면 
+				 bean.setId(rs.getString(1));
+				 bean.setPass1(rs.getString(2));
+				 bean.setEmail(rs.getString(3));
+				 bean.setTel(rs.getString(4));
+				 bean.setHobby(rs.getString(5));
+				 bean.setJob(rs.getString(6));
+				 bean.setAge(rs.getString(7));
+				 bean.setInfo(rs.getString(8));	 		 
+			 }
+			 
+			 //자원 반납
+			 conn.close();
+			 
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		   	}	
+		 //리턴 
+		return bean;	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
