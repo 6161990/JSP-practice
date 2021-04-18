@@ -83,9 +83,9 @@
 				</tr>
 					
 				<tr height="50">
-					<td width="150" colspan="2">
-						<input type="submit" value="회원 가입">	
-						<input type="reset" value="취소">			
+					<td width="150" align="center" colspan="2">
+						<input type="submit" value="회원 가입"/>	&nbsp;
+						<input type="reset" value="취소"/>		
 					</td>
 				</tr>	
 			</table>

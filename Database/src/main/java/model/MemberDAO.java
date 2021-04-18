@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import javax.swing.plaf.metal.MetalComboBoxButton;
+
 //데이터 베이스에 연결하고 select, insert, update,delete 작업을 실행해주는 클래스
 public class MemberDAO {
  
@@ -150,14 +152,91 @@ public class MemberDAO {
 	}
 	
 	
+	//한 회원의 패스워드 값을 리턴하는 메소드 작성
+		public String getPass1(String id){
+			//스트링으로 리턴을 해야하기에 스트링 변수 선언
+			String pass="";
+			try {
+			 //커넥션 연결 
+			 getCon();
+			 //쿼리 준비 
+			 String SQL = "SELECT pass1 FROM MEMBER WHERE id= ?";
+			 //쿼리를 실행 시켜주는 객체 선언 
+			 pstmt = conn.prepareStatement(SQL);		 
+			 //?의 값을 맵핑 
+			 pstmt.setString(1,id);
+			 //쿼리 실행 
+			 rs = pstmt.executeQuery();
+			 
+			 if(rs.next()){
+				 pass=rs.getString(1);	 //패스워드 값이 저장된 컬럼인덱스
+			 }
+			 
+			 //자원 반납
+			 conn.close();
+			 
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		   	}	
+			//리턴 
+			return pass;	
+		}
+		
+		
+		
+	//한 회원의 정보를 수정하는 매소드 
+	public void updateMember(MemberBean bean){
+			getCon();
+			try {
+			 //쿼리 준비 
+			 String SQL = "UPDATE MEMBER SET email=?,tel=? WHERE id=?";
+			 //쿼리를 실행 시켜주는 객체 선언 
+			 pstmt = conn.prepareStatement(SQL);		 
+			 //?의 값을 맵핑 
+			 pstmt.setString(1,bean.getEmail());
+			 pstmt.setString(2,bean.getTel());
+			 pstmt.setString(3,bean.getId());
+			 //쿼리 실행 
+			 pstmt.executeUpdate();
+			 //자원 반납
+			 conn.close();
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		   	}	
+		}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//한 회원을 삭제하는 메소드
+	public void deleteMember(String id) {
+		getCon();
+		
+		try {
+			String sql ="DELETE FROM MEMBER WHERE ID=?";
+			//쿼리를 실행 시켜주는 객체 선언 
+			 pstmt = conn.prepareStatement(sql);		 
+			 //?의 값을 맵핑 
+			 pstmt.setString(1,id);
+			 //쿼리 실행 
+			 pstmt.executeUpdate();
+			 //자원 반납
+			 conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+		
+		
+		
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
