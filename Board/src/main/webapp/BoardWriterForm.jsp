@@ -12,7 +12,7 @@
 <h1> 게시글 쓰기 </h1>
 
 <form action=BoardWriteProc.jsp method="post">
-<table width="600" border="10" bordercolor="#1DE9B6" bgcolor="#607D8B">
+<table width="600" border="10" bordercolor="#00BCD4" bgcolor="#E0F7FA">
 	<tr height="40">
 		<td align="center" width="150">작성자</td>
 		<td align="center" width="450"><input type="text" name="writer" size="60"></td>
@@ -31,7 +31,7 @@
 		<td align="center" width="450"><input type="password" name="password" size="60"></td>
 	</tr>
 	<tr height="40">
-		<td align="center" width="150">글 내용</td>
+		<td align="center" width="150">글내용</td>
 		<td align="center" width="450"><textarea rows="10" cols="50" name="content"></textarea></td>
 	</tr>
 	<tr height="40">
