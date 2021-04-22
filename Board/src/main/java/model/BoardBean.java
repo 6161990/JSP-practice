@@ -9,7 +9,7 @@ public class BoardBean {
 	private String password; 
 	private String reg_date; //원래 date 타입인데 화면에 뿌려주기위해 String 타입으로 사용.넣을 때는 system이넣음. 빼는 것만 우리가.
 	private int ref;
-	private int re_stop;
+	private int re_step;
 	private int re_level;
 	private int readcount;
 	private String content;
@@ -57,11 +57,11 @@ public class BoardBean {
 	public void setRef(int ref) {
 		this.ref = ref;
 	}
-	public int getRe_stop() {
-		return re_stop;
+	public int getRe_step() {
+		return re_step;
 	}
-	public void setRe_stop(int re_stop) {
-		this.re_stop = re_stop;
+	public void setRe_step(int re_step) {
+		this.re_step = re_step;
 	}
 	public int getRe_level() {
 		return re_level;

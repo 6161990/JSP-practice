@@ -112,7 +112,7 @@ public class BoardDAO {
 				 bean.setPassword(rs.getString(5));
 				 bean.setReg_date(rs.getDate(6).toString());
 				 bean.setRef(rs.getInt(7));
-				 bean.setRe_stop(rs.getInt(8));
+				 bean.setRe_step(rs.getInt(8));
 				 bean.setRe_level(rs.getInt(9));
 				 bean.setReadcount(rs.getInt(10));
 				 bean.setContent(rs.getString(11));
@@ -127,6 +127,50 @@ public class BoardDAO {
 		
 		return v;
 		
+	}
+	
+	
+	//하나의 게시글을 레턴하는 메소드
+	public BoardBean getOneBoard(int num) {
+		
+			//리턴타입 선언
+			BoardBean bean = new BoardBean();
+			getCon();
+			
+		try {
+			//조회수 증가쿼리
+			String readsql = "update board set readcount = readcount+1 where num=?";
+			pstmt = con.prepareStatement(readsql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+			
+			//쿼리준비
+			String sql ="select * from board where num=?";
+			
+			//쿼리 실행객체
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			
+			//쿼리 실행 후 결과를 리턴
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				bean.setNum(rs.getInt(1));
+				bean.setWriter(rs.getString(2));
+				bean.setEmail(rs.getString(3));
+				bean.setSubject(rs.getString(4));
+				bean.setPassword(rs.getString(5));
+				bean.setReg_date(rs.getDate(6).toString());
+				bean.setRef(rs.getInt(7));
+				bean.setRe_step(rs.getInt(8));
+				bean.setRe_level(rs.getInt(9));
+				bean.setReadcount(rs.getInt(10));
+				bean.setContent(rs.getString(11));
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bean;
 	}
 	
 	
