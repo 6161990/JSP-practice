@@ -24,7 +24,7 @@
 
 <center>
 <h2>게시글 보기</h2>
-<table width="600" border="5" bgcolor="">
+<table width="600" border="5" bordercolor="#00BCD4" bgcolor="#E0F7FA">
 	<tr height="40">
 		<td align ="center" width="120">글번호</td>
 		<td align ="center" width="180"><%=bean.getNum() %>

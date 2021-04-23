@@ -27,6 +27,7 @@
 	
 	//게시글 저장 후, 전체 게시글 보기
 	response.sendRedirect("BoardList.jsp");
+
 	
 %>
 

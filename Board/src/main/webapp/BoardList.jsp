@@ -39,8 +39,16 @@
 	
 		<tr height="40">
 		<td width="50" align="center"><%=i+1 %></td>
-		<td width="320" align="left"><a href="BoardInfo.jsp?num=<%=bean.getNum()%>">
-			<%=bean.getSubject() %></a></td>
+		<td width="320" align="left">
+		<a href="BoardInfo.jsp?num=<%=bean.getNum()%>" style ="text-decoration:none">
+	<% 
+		if(bean.getRe_step() > 1){
+			for(int j = 0 ;j<(bean.getRe_step()-1)*5;j++){		
+	%>	&nbsp;	
+	<% 		}
+		}
+    %>
+			<%=bean.getSubject() %> </a> </td>
 		<td width="100" align="center"><%=bean.getWriter() %></td>
 		<td width="150" align="center"><%=bean.getReg_date() %></td>
 		<td width="80" align="center"><%=bean.getReadcount() %></td>			
