@@ -214,8 +214,8 @@ public class BoardDAO {
 		}
 	}
 	
-	//boardUpdate용 하나의 게시글 리턴
-	//하나의 게시글을 레턴하는 메소드
+	
+		//boardUpdate용 하나의 게시글 리턴
 		public BoardBean getOneUpdateBoard(int num) {
 			
 				//리턴타입 선언
@@ -260,8 +260,71 @@ public class BoardDAO {
 			return bean;
 		}
 		
+		//update와 delete시 필요한 패스워드 값을 리턴해주는 메소드
+		public String getPass(int num) {
+			//리턴할 변수 객체 선언
+			String pass ="";
+			getCon();
+			
+			try {
+				//쿼리 준비
+				String sql="select password from board where num=?";
+				//쿼리 실행할 객체 선언
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				rs = pstmt.executeQuery();
+				//패스워드 값을 지정
+				if(rs.next()) {
+					pass=rs.getString(1);
+				}
+				//자원 반납
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+			return pass;
+		}
+		
+		//하나의 게시글을 수정하는 메소드
+		public void updateBoard(BoardBean bean) {
+			getCon();
+			try {
+				//쿼리 준비
+				String sql="update board set subject=?, content=? where num=?";
+				pstmt=con.prepareStatement(sql);
+				
+				//?값을 매입
+				pstmt.setString(1, bean.getSubject());
+				pstmt.setString(2, bean.getContent());
+				pstmt.setInt(3, bean.getNum());
+				
+				pstmt.executeUpdate();
+				
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	
-	
+		//하나의 게시글을 삭제하는 메소드
+		public void deleteBoard(int num) {
+			
+			getCon();
+			try {
+				//쿼리 준비
+				String sql="delete from board where num=?";
+				pstmt = con.prepareStatement(sql);
+				//?값 대입
+				pstmt.setInt(1, num);
+				//쿼리 실행 
+				pstmt.executeUpdate();
+				//자원반납
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 	
 
 }
