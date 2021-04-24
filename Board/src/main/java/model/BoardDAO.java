@@ -84,22 +84,23 @@ public class BoardDAO {
 		}
 	}
 	
-	//모든 게시물을 리턴해주는 메소드 작성
-	public Vector<BoardBean> getAllBoard(){
-		
+	//모든 게시물을 리턴해주는 메소드 작성에서 정해진 페이징 처리대로 게시물 갯수를 리턴으로 변경
+	//기존의 메소드에서 쿼리만 수정해주면 됌!
+	public Vector<BoardBean> getAllBoard(int start, int end){
 		//리턴할 객체 선언
 		Vector<BoardBean> v = new Vector<>();
 		getCon();
 		
 		try {
-			//쿼리 준비
-			String sql ="select * from board order by ref desc, re_step asc";
+			//쿼리 준비 //Rownum 1 부터 상위 5등까지 출력하시오 등의 것들을 출력하라는 top-end 개념의 오라클 내장 함수
+			String sql ="select * from (select A.*, Rownum Rnum from(select *from board order by ref desc, re_step asc)A)"
+					+ "where Rnum >= ? and Rnum <= ?";
 			
 			//쿼리를 실행할 객체 선언
 			pstmt = con.prepareStatement(sql);
-			
-			//쿼리 실행후 결과 저장
-			rs = pstmt.executeQuery();
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rs = pstmt.executeQuery();//쿼리 실행후 결과 저장
 			
 			//데이터 개수가 몇 개인지 모르기에 반복문을 이용하여 데이터를 추출
 			while(rs.next()) {
@@ -326,5 +327,28 @@ public class BoardDAO {
 		}
 		
 	
+		//전체 글의 갯수를 리턴하는 메소드
+		public int getAllCount() {
+			getCon();
+			
+			//게시글 전체수를 저장하는 변수
+			int count=0;
+			try {
+				//쿼리 준비
+				String sql="select count (*) from board";  //카운트를 한꺼번에 해주는 함수가 있음
+				//쿼리를 실행할 객체 선언
+				pstmt=con.prepareStatement(sql);
+				//쿼리 실행후 결과를 리턴
+				rs= pstmt.executeQuery();
+				if(rs.next()) {
+					count=rs.getInt(1); // 전체 게시글 수 
+				}
+				con.close();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return count;
+		}
 
 }
