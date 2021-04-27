@@ -9,9 +9,8 @@ public class CarReserveBean {
 	private String rday;//대여일
 	private int usein;
 	private int usewifi;
-	private int usenavi;
 	private int useseat;
-	
+	private int usenavi;
 	public int getReserveno() {
 		return reserveno;
 	}
@@ -60,17 +59,19 @@ public class CarReserveBean {
 	public void setUsewifi(int usewifi) {
 		this.usewifi = usewifi;
 	}
-	public int getUsenavi() {
-		return usenavi;
-	}
-	public void setUsenavi(int usenavi) {
-		this.usenavi = usenavi;
-	}
 	public int getUseseat() {
 		return useseat;
 	}
 	public void setUseseat(int useseat) {
 		this.useseat = useseat;
 	}
+	public int getUsenavi() {
+		return usenavi;
+	}
+	public void setUsenavi(int usenavi) {
+		this.usenavi = usenavi;
+	}
+
+	
 	
 }

@@ -11,7 +11,6 @@
 </head>
 <body>
 	<center> 
-
 		<!-- 데이터베이스에 연결하여 최신순 자동차 3대 showing 하는 데이터를 가져오기 -->
 		<%
 			RentCarDAO rdao=new RentCarDAO();
