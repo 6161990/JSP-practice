@@ -245,6 +245,10 @@ public class RentCarDAO {
 		}
 	}
 	
+	//회원의 예약정보를 리턴하는 메소드
+	public Vector<CarViewBean> getAllReserve(String id){
+		
+	}
 	
 	
 	
