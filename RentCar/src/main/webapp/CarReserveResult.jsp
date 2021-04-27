@@ -1,3 +1,5 @@
+<%@page import="db.CarListBean"%>
+<%@page import="db.RentCarDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -51,6 +53,61 @@
 	<%
 		}
 		
+		//결과값으로 아무런 문제가 없다면 데이터 저장 후 결과 페이지 보여주기
+		//아이디 값이 빈클래스에 없기에 
+		String id1 = (String)session.getAttribute("id");
+		rbean.setId(id1);
+		
+		//데이터 베이스에 빈클래스 저장
+		RentCarDAO rdao  = new RentCarDAO();
+		rdao.setReserveCar(rbean); 
+		
+		//차량 정보 얻어오기
+		CarListBean cbean = rdao.getOneCar(rbean.getNo());
+		
+		//차량 총 금액
+		int totalcar = cbean.getPrice()*rbean.getQty()*rbean.getDday();
+		//옵션금액
+		int usein=0;
+		if(rbean.getUsein()==1) {usein=10000;}
+		int usewifi=0;
+		if(rbean.getUsewifi()==1) {usewifi=10000;}
+		int useseat=0;
+		if(rbean.getUseseat()==1) {useseat=10000;}
+		int totaloption= (rbean.getQty()*rbean.getDday())*(usein+usewifi+useseat);
 	%>
+	<center>
+	<table width="1000">
+			<tr height="100">
+				<td align="center">
+					<font size="6" color="gray"><b>Car Reserve Infomation</b></font>
+				</td>
+			</tr>
+			
+			<tr height="100">
+				<td align="center">
+					<img alt="" src="images/<%=cbean.getImg()%>"  width="470">
+				</td>
+			</tr>
+			
+			<tr height="50">
+				<td align="center">
+					<font size="3" color="black"><b>Reserve</b>  <%=totalcar%>원 </font>
+				</td>
+			</tr>
+			
+			<tr height="50">
+				<td align="center">
+					<font size="3" color="black"><b>Option</b>  <%=totaloption %>원 </font>
+				</td>
+			</tr>
+			
+			<tr height="50">
+				<td align="center">
+					<font size="4" color="black"><b>Total</b> <%=totaloption+totalcar%>원 </font>
+				</td>
+			</tr>
+		</table>
+	</center>
 </body>
 </html>

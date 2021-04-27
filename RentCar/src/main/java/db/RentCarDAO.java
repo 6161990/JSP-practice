@@ -219,6 +219,32 @@ public class RentCarDAO {
 		return result;
 	}
 	
+	//하나의 예약정보를 저장하는 메소드
+	public void setReserveCar(CarReserveBean bean) {
+		getCon();
+		
+		try {
+			String sql="insert into carreserve values(reserve_seq.NEXTVAL,?,?,?,?,?,?,?,?,?)";
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setInt(1, bean.getNo());
+			pstmt.setString(2, bean.getId());
+			pstmt.setInt(3, bean.getQty());
+			pstmt.setInt(4, bean.getDday());
+			pstmt.setString(5, bean.getRday());
+			pstmt.setInt(6, bean.getUsein());
+			pstmt.setInt(7, bean.getUsewifi());
+			pstmt.setInt(8, bean.getUseseat());
+			pstmt.setInt(9, bean.getUsenavi());
+			
+			pstmt.executeUpdate();
+			
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	
 	
