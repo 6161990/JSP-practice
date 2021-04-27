@@ -24,7 +24,19 @@
 				<img alt="" src="images/RENT.png" height="65"></a>
 			</td>
 			<td align="center" width="200">
-				<%=id %>님 반갑습니다.
+				<%=id %>님
+			<%
+				if(id.equals("GUEST")){
+			%>	
+				<button onclick="location.href='RentCarMain.jsp?center=MemberLogin.jsp'">
+				로그인</button>
+			<%
+				}else {
+			%>
+				<button onclick="location.href='RentcarMain.jsp?center=MemberLogout.jsp'">로그아웃</button>
+			<%		
+				}
+			%>
 			</td>	
 		</tr>	
 		<tr height ="50">
