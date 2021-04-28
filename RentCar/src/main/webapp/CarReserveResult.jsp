@@ -80,7 +80,7 @@
 	<table width="1000">
 			<tr height="100">
 				<td align="center">
-					<font size="6" color="gray"><b>Car Reserve Infomation</b></font>
+					<font size="6" color="gray"><b>Check Car Reserve Infomation</b></font>
 				</td>
 			</tr>
 			
