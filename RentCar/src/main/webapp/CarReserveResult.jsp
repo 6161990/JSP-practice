@@ -44,7 +44,7 @@
 		//예약하려는 날짜보다 현재날짜가 크다면 -1
 		//예약하려는 날짜와 현재날짜가 같다면0
 		//예약하려는 날짜가 더 크다면 1을 리턴
-		if(compare <0){ //오늘 기준 , 이전 날짜 선택시 예약불가
+		if(compare < 0){ //오늘 기준 , 이전 날짜 선택시 예약불가
 	%>
 			<script>
 				alert("예약 불가능한 날짜입니다. 오늘 이후 날짜로 선택해주십시오.");
@@ -75,6 +75,7 @@
 		int useseat=0;
 		if(rbean.getUseseat()==1) {useseat=10000;}
 		int totaloption= (rbean.getQty()*rbean.getDday())*(usein+usewifi+useseat);
+		
 	%>
 	<center>
 	<table width="1000">

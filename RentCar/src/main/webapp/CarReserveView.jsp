@@ -67,8 +67,8 @@
 				<td width="60" align="center"><%=bean.getUsewifi()%></td>
 				<td width="60" align="center"><%=bean.getUseseat()%></td>
 				<td width="60" align="center"><%=bean.getUsenavi()%></td>
-				<td width="90" align="center"><button onclick="location.href='CarReserveDel.jsp?'">삭제</button></td>
-			</tr>
+				<td width="90"align="center"><button onclick="location.href='CarReserveDel.jsp?id=<%=id%>&rday=<%=bean.getRday()%>'">삭제</button></td>
+			</tr> 
 			<%
 			 }
 			%>
