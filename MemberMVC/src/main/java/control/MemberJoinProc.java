@@ -55,7 +55,8 @@ public class MemberJoinProc extends HttpServlet {
 			MemberDAO mdao = new MemberDAO();
 			mdao.insertMember(bean);
 			
-			RequestDispatcher dis = request.getRequestDispatcher("MemberList.jsp");
+			//컨트롤러에서 또 다른 컨트롤러 호출하기
+			RequestDispatcher dis = request.getRequestDispatcher("MemberListCon.do");
 			dis.forward(request, response);
 		}else {
 			request.setAttribute("msg", "패스워드가 일치하지 않습니다"); //jsp가 아니므로 request객체를 jsp쪽으로 넘겨주어야함
