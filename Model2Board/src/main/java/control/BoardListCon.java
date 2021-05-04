@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.util.Vector;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,5 +52,15 @@ public class BoardListCon extends HttpServlet {
 		//최신글 10개를 기준으로 게시글을 리턴 받아주는 메소드 호출 
 		Vector<BoardBean> v = bdao.getAllBoard(startRow,endRow);
 		number = count -(currentPage-1) * pageSize;
+		
+		///////////// BoardList.jsp 쪽으로 request객체에 담아서 넘겨줌
+		request.setAttribute("v", v);
+		request.setAttribute("number", number);
+		request.setAttribute("pageSize", pageSize);
+		request.setAttribute("count", count);
+		request.setAttribute("currentPage", currentPage);
+		
+		RequestDispatcher dis = request.getRequestDispatcher("BoardList.jsp");
+		dis.forward(request, response);
 	}
 }
