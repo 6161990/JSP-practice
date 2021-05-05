@@ -9,6 +9,17 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<c:if test="${msg==1 }">
+	<script type="text/javascript">
+		alert("수정 시 비밀번호가 일치하지않습니다.");
+	</script>
+</c:if>
+<c:if test="${msg==2 }">
+	<script type="text/javascript">
+		alert("삭제 시 비밀번호가 일치하지않습니다.");
+	</script>
+</c:if>
 	<center>
 	<h2>전체 게시글 보기</h2>
 		<table width="700" border="1" bordercolor="black">

@@ -178,6 +178,132 @@ public class BoardDAO {
 		return bean;
 	}
 	
+	//답변글을 저장하는 메소드
+	public void reInsertBoard(BoardBean bean) {
+		getCon();
+		
+		int ref = bean.getRef();
+		int re_step=bean.getRe_step();
+		int re_level=bean.getRe_level();
+		
+		
+		try {
+			//핵심코드
+			String levelsql ="update board set re_level= re_level+1 where ref=? and re_level";
+			pstmt=con.prepareStatement(levelsql);
+			pstmt.setInt(2, ref);
+			pstmt.setInt(2, re_level);
+			pstmt.executeUpdate();
+			
+			//데이터 삽입
+			String sql ="insert into board values(board_seq.NEXTVAL, ?,?,?,?,sysdate,?,?,?,0,?)";
+			pstmt=con.prepareStatement(sql);
+			//?
+			pstmt.setString(1, bean.getWriter());
+			pstmt.setString(2, bean.getEmail());
+			pstmt.setString(3, bean.getSubject());
+			pstmt.setString(4, bean.getPassword());
+			pstmt.setInt(5, ref);
+			pstmt.setInt(6, re_step+1); //기존 부모글의 스텝보다 1을 증가
+			pstmt.setInt(7, re_level+1);//기존 부모글의 레벨보다 1을 증가
+			pstmt.setString(8, bean.getContent());
+			
+			pstmt.executeUpdate();
+			con.close();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	//조회수를 증가하지 않는 하나의 게시글을 리턴하는  update 메소드 
+	public BoardBean getOneUpdateBoard(int num) {
+		getCon();
+		BoardBean bean = null;
+	
+		try {
+			// 한 게시글에 대한 정보를 리턴해주는 쿼리를 작성
+			String sql = "select * from board where num=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			
+			//쿼리 실행후 결과를 리턴
+			rs = pstmt.executeQuery();
+			if(rs.next()) { //하나의 게시글이 존재한다면
+				//데이터를 패키징(가방 = BoardBean 클래스를 이용) 해줌
+				bean = new BoardBean();
+				bean.setNum(rs.getInt(1));
+				bean.setWriter(rs.getString(2));
+				bean.setEmail(rs.getString(3));
+				bean.setSubject(rs.getString(4));
+				bean.setPassword(rs.getString(5));
+				bean.setReg_date(rs.getDate(6).toString());
+				bean.setRef(rs.getInt(7));
+				bean.setRe_step(rs.getInt(8));
+				bean.setRe_level(rs.getInt(9));
+				bean.setReadcount(rs.getInt(10));
+				bean.setContent(rs.getString(11));
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bean;
+	}
+
+	//하나의 게시글을 수정하는 메소드
+	public void updateBoard(int num, String subject, String content) {
+		//데이터 베이스연결
+		getCon();
+		
+		
+		try {
+			//3.쿼리 준비 쿼리 실행할 객체 선언
+			String sql ="update board set subject=?, content=? where num=?";
+			pstmt = con.prepareStatement(sql);
+			//?에 값을 대입
+			pstmt.setString(1, subject);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, num);
+			// 4. 쿼리 실행
+			pstmt.executeUpdate();
+			//5. 자원 반납
+			con.close();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		
+				
+	}
+
+	//하나의 게시글을 삭제하는 매소드
+	public void deleteBoard(int num){
+				getCon();
+				
+				try {		
+					//쿼리 준비 
+					String sql = "delete from board where num=?";
+					
+					//쿼리 실행할 객체 선언
+					pstmt = con.prepareStatement(sql);
+					//?
+					pstmt.setInt(1,num);
+					
+					//쿼리 실행
+					pstmt.executeUpdate();
+					
+					//자원 반납
+					con.close();
+						
+				}catch(Exception e) {
+					e.printStackTrace();
+					
+				}
+			}
+	
 	
 	
 	
